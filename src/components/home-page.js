@@ -7,8 +7,8 @@ import PodcastSummary from './product-summary';
 function HomePage() {
     const externalData = useExternalData(getAllPodcasts);
     
-    if (externalData.isLoading) return null; // TODO loader indicator
-
+    if (externalData.isLoading) return null;
+    
     return (
         <div className="podcasts-grid">
             <div className="filter">

@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import LoaderContext from '../contexts/loader-context';
 
 export default function useExternalData(loader) {
     const [externalData, setExternalData] = useState({
@@ -7,15 +8,19 @@ export default function useExternalData(loader) {
         error: undefined
     });
 
+    const context = useContext(LoaderContext);
+    
     useEffect(() => {
-        loader
-            .call()
+        context.setIsLoading(true);
+
+        loader()
             .then(data => {
                 setExternalData({
                     ...externalData,
                     isLoading: false,
                     data
                 });
+                context.setIsLoading(false);
             })
             .catch(error => {
                 setExternalData({
@@ -23,6 +28,7 @@ export default function useExternalData(loader) {
                     isLoading: false,
                     error
                 });
+                context.setIsLoading(false);
             });
     }, []);
 
