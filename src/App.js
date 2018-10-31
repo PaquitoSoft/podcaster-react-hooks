@@ -1,14 +1,15 @@
-import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useState } from 'react';
 
 import Header from './components/header';
-import HomePage from './components/home-page';
-import PodcastPage from './components/podcast-page';
-import EpisodePage from './components/episode-page';
 import LoaderContext from './contexts/loader-context';
 
 import './App.css';
+
+const HomePage = lazy(() => import('./components/home-page'));
+const PodcastPage = lazy(() => import('./components/podcast-page'));
+const EpisodePage = lazy(() => import('./components/episode-page'));
 
 function App() {
 	
@@ -27,9 +28,13 @@ function App() {
 				<div>
 					<Header />
 					<main className="main-content">
-						<Route path="/" exact component={HomePage} />
-						<Route path="/podcast/:podcastId" exact component={PodcastPage} />
-						<Route path="/podcast/:podcastId/episode/:episodeId" component={EpisodePage} />
+						<Suspense fallback={<div></div>}>
+							<Switch>
+								<Route path="/" exact render={props => <HomePage {...props} />} />
+								<Route path="/podcast/:podcastId/episode/:episodeId" render={props => <EpisodePage {...props} />} />
+								<Route path="/podcast/:podcastId" render={props => <PodcastPage {...props} />} />
+							</Switch>
+						</Suspense>
 					</main>
 				</div>
 			</LoaderContext.Provider>
