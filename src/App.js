@@ -4,6 +4,8 @@ import { useState } from 'react';
 
 import Header from './components/header';
 import HomePage from './components/home-page';
+import PodcastPage from './components/podcast-page';
+import EpisodePage from './components/episode-page';
 import LoaderContext from './contexts/loader-context';
 
 import './App.css';
@@ -26,6 +28,8 @@ function App() {
 					<Header />
 					<main className="main-content">
 						<Route path="/" exact component={HomePage} />
+						<Route path="/podcast/:podcastId" exact component={PodcastPage} />
+						<Route path="/podcast/:podcastId/episode/:episodeId" component={EpisodePage} />
 					</main>
 				</div>
 			</LoaderContext.Provider>
