@@ -1,7 +1,9 @@
 import React from 'react';
-import PodcastSummary from './product-summary';
+
 import withExternalData from '../hocs/with-external-data';
 import { getAllPodcasts } from '../api/podcaster';
+
+import PodcastSummary from './product-summary';
 
 class HomePage extends React.Component {
 

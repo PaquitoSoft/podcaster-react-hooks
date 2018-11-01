@@ -7,8 +7,9 @@ import LoaderContext from './contexts/loader-context';
 
 import './App.css';
 
-// const HomePage = lazy(() => import('./components/home-page'));
-const HomePage = lazy(() => import('./components/home-page-class'));
+const HomePage = lazy(() => import('./components/home-page'));
+// const HomePage = lazy(() => import('./components/home-page-hoc'));
+// const HomePage = lazy(() => import('./components/home-page-render-prop'));
 const PodcastPage = lazy(() => import('./components/podcast-page'));
 const EpisodePage = lazy(() => import('./components/episode-page'));
 
