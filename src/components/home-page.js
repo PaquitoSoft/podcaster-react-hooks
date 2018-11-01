@@ -4,11 +4,13 @@ import { getAllPodcasts } from '../api/podcaster';
 
 import PodcastSummary from './product-summary';
 
-function filterPodcasts(originalPodcasts, updater, filter) {
-    const regExp = new RegExp(filter, 'i');
-    updater(
-        originalPodcasts.filter(podcast => regExp.test(podcast.name + podcast.author))
-    );
+function onFilterChangedFactory(originalPodcasts, updater) {
+    return (event) => {
+        const regExp = new RegExp(event.target.value, 'i');
+        updater(
+            originalPodcasts.filter(podcast => regExp.test(podcast.name + podcast.author))
+        );
+    };
 }
 
 function HomePage() {
@@ -22,9 +24,7 @@ function HomePage() {
             <div className="filter">
                 <span className="badge">{filteredPodcasts.length}</span>
                 <input type="text" name="filter-value" autoFocus
-                    placeholder="Filter podcasts..." onChange={(event => {
-                        filterPodcasts(originalPodcasts, setFilteredPodcasts, event.target.value);
-                    })}/>
+                    placeholder="Filter podcasts..." onChange={onFilterChangedFactory(originalPodcasts, setFilteredPodcasts)} />
             </div>
             <div className="podcasts-list">
                 {filteredPodcasts.map(podcast => {
